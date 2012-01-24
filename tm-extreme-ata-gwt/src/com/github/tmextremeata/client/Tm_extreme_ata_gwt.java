@@ -41,7 +41,7 @@ public class Tm_extreme_ata_gwt implements EntryPoint {
 	public void onModuleLoad() {
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
-		nameField.setText("just to be different from the example");
+		nameField.setText("really really really");
 		final Label errorLabel = new Label();
 
 		// We can add style names to widgets
