@@ -1,0 +1,2 @@
+# Module tm_extreme_ata_gwt
+# RPC service class, partial path of RPC policy file

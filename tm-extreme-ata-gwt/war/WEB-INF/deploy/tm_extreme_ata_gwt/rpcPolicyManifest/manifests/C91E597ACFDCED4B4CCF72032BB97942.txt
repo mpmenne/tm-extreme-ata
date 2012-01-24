@@ -1,0 +1,2 @@
+serviceClass: com.github.tmextremeata.client.GreetingService
+path: D95FAEA5D129694E1CAC44C3CEBDABF0.gwt.rpc
