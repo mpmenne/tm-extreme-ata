@@ -4,6 +4,8 @@ import com.github.tmextremeata.client.GreetingService;
 import com.github.tmextremeata.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import javax.jdo.PersistenceManager;
+
 /**
  * The server side implementation of the RPC service.
  */
@@ -12,7 +14,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		GreetingService {
 
 	public String greetServer(String input) throws IllegalArgumentException {
-		
+        PersistenceManager pm;
 		// Verify that the input is valid. 
 		if (!FieldVerifier.isValidName(input)) {
 			// If the input is not valid, throw an IllegalArgumentException back to

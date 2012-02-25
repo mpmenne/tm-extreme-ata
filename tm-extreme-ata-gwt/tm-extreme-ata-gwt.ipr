@@ -14,6 +14,14 @@
   </component>
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
+    <buildFile url="file://$PROJECT_DIR$/build.xml">
+      <additionalClassPath />
+      <antReference projectDefault="true" />
+      <customJdkName value="" />
+      <maximumHeapSize value="128" />
+      <maximumStackSize value="2" />
+      <properties />
+    </buildFile>
   </component>
   <component name="ArtifactManager">
     <artifact type="exploded-war" name="tm-extreme-ata-gwt:war exploded">
@@ -207,7 +215,7 @@
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6 (1)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6 (1)" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/classes" />
   </component>
   <component name="SuppressionsComponent">
@@ -227,6 +235,16 @@
       <SOURCES />
       <jarDirectory url="file://C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/com.google.appengine.eclipse.sdkbundle_1.6.1.v201201120043r37/appengine-java-sdk-1.6.1/lib/user" recursive="false" />
     </library>
+    <library name="gae-testing">
+      <CLASSES>
+        <root url="jar://C:/google/appengine-java-sdk-1.6.1.1/lib/testing/appengine-testing.jar!/" />
+        <root url="jar://C:/google/appengine-java-sdk-1.6.1.1/lib/impl/appengine-api-stubs.jar!/" />
+        <root url="jar://C:/google/appengine-java-sdk-1.6.1.1/lib/impl/appengine-api.jar!/" />
+        <root url="jar://C:/google/appengine-java-sdk-1.6.1.1/lib/impl/appengine-api-labs.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="gwt-user">
       <CLASSES>
         <root url="jar://C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.4.0.v201201120043-rel-r37/gwt-2.4.0/gwt-user.jar!/" />
@@ -235,6 +253,22 @@
       <SOURCES>
         <root url="jar://C:/Program Files/springsource/sts-2.8.1.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.4.0.v201201120043-rel-r37/gwt-2.4.0/gwt-user.jar!/" />
       </SOURCES>
+    </library>
+    <library name="gwt-user (2)">
+      <CLASSES>
+        <root url="jar://C:/google/gwt-2.4.0/gwt-2.4.0/gwt-user.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://C:/google/gwt-2.4.0/gwt-2.4.0/gwt-user.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="test-lib">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/test_lib/mockito-all-1.8.5.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
     </library>
     <library name="Unnamed">
       <CLASSES>
@@ -253,6 +287,7 @@
         <root url="jar://$PROJECT_DIR$/war/WEB-INF/lib/datanucleus-jpa-1.1.5.jar!/" />
         <root url="jar://$PROJECT_DIR$/war/WEB-INF/lib/datanucleus-core-1.1.5.jar!/" />
         <root url="jar://$PROJECT_DIR$/war/WEB-INF/lib/datanucleus-appengine-1.0.10.final.jar!/" />
+        <root url="jar://$PROJECT_DIR$/war/WEB-INF/lib/joda-time-2.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

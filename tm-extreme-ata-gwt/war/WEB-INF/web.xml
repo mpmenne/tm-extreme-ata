@@ -7,6 +7,16 @@
 
   <!-- Servlets -->
   <servlet>
+      <servlet-name>gameServlet</servlet-name>
+      <servlet-class>com.github.tmextremeata.server.GameServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+      <servlet-name>gameServlet</servlet-name>
+      <url-pattern>/tm_extreme_ata_gwt/game</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>com.github.tmextremeata.server.GreetingServiceImpl</servlet-class>
   </servlet>
@@ -15,8 +25,46 @@
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/tm_extreme_ata_gwt/greet</url-pattern>
   </servlet-mapping>
-  
-  <!-- Default page to serve -->
+
+    <servlet>
+        <servlet-name>simpleServlet</servlet-name>
+        <servlet-class>com.github.tmextremeata.server.SimpleServletImpl</servlet-class>
+    </servlet>
+    
+  <servlet-mapping>
+      <servlet-name>simpleServlet</servlet-name>
+      <url-pattern>/tm_extreme_ata_gwt/simple</url-pattern>
+  </servlet-mapping>
+    
+  <servlet>
+      <servlet-name>simpleServletWithJsp</servlet-name>
+      <servlet-class>com.github.tmextremeata.server.SimpleServletWithJsp</servlet-class>
+  </servlet>  
+    
+  <servlet-mapping>
+      <servlet-name>simpleServletWithJsp</servlet-name>
+      <url-pattern>/tm_extreme_ata_gwt/simpleWithJsp</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+      <servlet-name>simpleServletWithForm</servlet-name>
+      <servlet-class>com.github.tmextremeata.server.SimpleServletWithFormImpl</servlet-class>
+  </servlet>
+
+    <servlet>
+        <servlet-name>LoginService</servlet-name>
+        <servlet-class>com.github.tmextremeata.server.LoginServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginService</servlet-name>
+        <url-pattern>/tm_extreme_ata_gwt/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>simpleServletWithForm</servlet-name>
+        <url-pattern>/tm_extreme_ata_gwt/juicyCampus</url-pattern>
+    </servlet-mapping>
+    <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Tm_extreme_ata_gwt.html</welcome-file>
   </welcome-file-list>

@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<g:HTMLPanel width='100%'>
+        <h1>Web Application Starter Project</h1>
+            <table align="center">
+              <tr>
+                <td colspan="2" style="font-weight:bold;">Please enter your name:</td>
+              </tr>
+              <tr>
+                <g:TextBox ui:field="nameField"/>
+                <g:Button ui:field="sendButton"/>
+              </tr>
+            </table>
+	</g:HTMLPanel>
+</ui:UiBinder>
