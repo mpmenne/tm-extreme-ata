@@ -36,6 +36,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
         validatePlayerInSession();
         Player player = playerStore.getBySessionId(getSession().getId());
         if (player == null) { return null; }
+        if (!player.isLoggedIn()) { return null; }
         player.setLoggedIn(true);
         playerStore.updatePlayer(player);
         return player;
