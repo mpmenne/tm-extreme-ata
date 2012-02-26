@@ -41,7 +41,7 @@ private final Label txtUser = new Label("Username:");
                             //Zeige Hauptanwendung
                             Window.alert("Welcome");
                             RootPanel.get().clear();
-                            RootPanel.get().add(new MainUI());
+                            RootPanel.get().add(new MainUI(result));
 //
                         } else {
                             Window.alert("Error");

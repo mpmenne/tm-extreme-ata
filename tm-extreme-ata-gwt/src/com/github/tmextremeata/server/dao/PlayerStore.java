@@ -13,24 +13,11 @@ public class PlayerStore {
 
 
     public Player getPlayer(String name) {
-//        @TODO throw missing player exception
-
-//        query.addFilter("sessionId", Query.FilterOperator.EQUAL, sessionId);
-//        Entity entity = ds.prepare(query).asSingleEntity();
-//        if (entity != null) {
-//            return new Player((String) entity.getProperty("name"));
-//        } else {
-//            return null;
-//        }
         Entity entity = getPlayerEntity(name);
         if (entity == null) {
             throw new IllegalArgumentException("Player was not found");
         }
-        Player player = new Player();
-        player.setName((String) entity.getProperty("name"));
-        player.setLoggedIn((Boolean) entity.getProperty("loggedIn"));
-
-        return player;
+        return newPlayer(entity);
     }
 
     private Entity getPlayerEntity(String name) {
@@ -47,7 +34,6 @@ public class PlayerStore {
         entity.setProperty("sessionId", sessionId);
         ds.put(entity);
         Player player = new Player();
-//        player.setSessionId(sessionId);
         player.setName(name);
         return player;
     }
@@ -61,5 +47,30 @@ public class PlayerStore {
 
     public String getHashPassword(String name) {
         return (String) getPlayerEntity(name).getProperty("hashPassword");
+    }
+
+    public Player getBySessionId(String sessionId) {
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query(PLAYER);
+        query.addFilter("sessionId", Query.FilterOperator.EQUAL, sessionId);
+        Entity entity = ds.prepare(query).asSingleEntity();
+        if (entity == null) { return null; }
+        return newPlayer(entity);
+    }
+
+    public void registerSession(String name, String sessionId) {
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query(PLAYER);
+        query.addFilter("name", Query.FilterOperator.EQUAL, name);
+        Entity entity = ds.prepare(query).asSingleEntity();
+        entity.setProperty("sessionId", sessionId);
+        ds.put(entity);
+    }
+
+    private static Player newPlayer(Entity entity) {
+        Player player = new Player();
+        player.setLoggedIn((Boolean) entity.getProperty("loggedIn"));
+        player.setName((String) entity.getProperty("name"));
+        return player;
     }
 }

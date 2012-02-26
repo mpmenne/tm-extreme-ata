@@ -1,5 +1,6 @@
 package com.github.tmextremeata.client.view;
 
+import com.github.tmextremeata.shared.Player;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -10,15 +11,15 @@ public class MainUI extends Composite {
     private final Button btLogIn = new Button("Logout");
     LoginServiceAsync loginService = GWT.create(LoginService.class);
 
-    public MainUI() {
-        this.initWidget(this.createAndFormateContentPanel());
+    public MainUI(Player player) {
+        this.initWidget(this.createAndFormateContentPanel(player));
 
     }
 
-    private Widget createAndFormateContentPanel() {
+    private Widget createAndFormateContentPanel(Player player) {
         final Panel panel = new VerticalPanel();
 
-        panel.add(new Label("Hello, Main!"));
+        panel.add(new Label("Hello, " + player.getName()));
 
         panel.add(btLogIn);
 
@@ -36,7 +37,7 @@ public class MainUI extends Composite {
                     public void onSuccess(Void result) {
                         Window.alert("Sucessfully logged out");
                         RootPanel.get().clear();
-
+                        RootPanel.get().add(new LoginUI());
                     }
 
                 });

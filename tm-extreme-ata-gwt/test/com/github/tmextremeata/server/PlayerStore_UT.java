@@ -9,6 +9,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -99,5 +100,52 @@ public class PlayerStore_UT {
         Query query = new Query(PlayerStore.PLAYER);
         query.addFilter("name", Query.FilterOperator.EQUAL, "mike");
         assertThat((Boolean) ds.prepare(query).asSingleEntity().getProperty("loggedIn"), is(true));
+    }
+
+    @Test
+    public void getBySessionIdShouldReturnPlayerUnderThatSession() {
+        PlayerStore playerStore = new PlayerStore();
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity(PlayerStore.PLAYER);
+        entity.setProperty("name", "mike");
+        entity.setProperty("loggedIn", true);
+        entity.setProperty("hashPassword", "hashedPassword");
+        entity.setProperty("sessionId", "abcsession");
+        ds.put(entity);
+        Entity differentEntity = new Entity(PlayerStore.PLAYER);
+        differentEntity.setProperty("name", "different person");
+        differentEntity.setProperty("sessionId", "different session");
+        ds.put(differentEntity);
+
+        Player player = playerStore.getBySessionId("abcsession");
+
+        assertEquals("mike", player.getName());
+        assertThat(player.isLoggedIn(), is(true));
+    }
+
+    @Test
+    public void registerSessionShouldAssociateSessionWithAPlayer() {
+        PlayerStore playerStore = new PlayerStore();
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity(PlayerStore.PLAYER);
+        entity.setProperty("name", "mike");
+        entity.setProperty("loggedIn", false);
+        entity.setProperty("hashPassword", "hashedPassword");
+        ds.put(entity);
+
+        playerStore.registerSession("mike", "abcsession");
+
+        Query query = new Query(PlayerStore.PLAYER);
+        query.addFilter("name", Query.FilterOperator.EQUAL, "mike");
+        assertThat((String) ds.prepare(query).asSingleEntity().getProperty("sessionId"), is("abcsession"));
+    }
+
+    @Test
+    public void getBySessionIdShouldJustReturnNullIfNoSessionExistsForPlayer() {
+        PlayerStore playerStore = new PlayerStore();
+
+        Player player = playerStore.getBySessionId("abcsession");
+
+        Assert.assertNull(player);
     }
 }

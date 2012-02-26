@@ -26,22 +26,36 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
             throw new IllegalArgumentException("Password does not match");
         }
         player.setLoggedIn(true);
-        getSession().setAttribute("player", player);
         playerStore.updatePlayer(player);
+        playerStore.registerSession(name, getSession().getId());
+        getSession().setAttribute("player", player);
         return player;
     }
 
     public Player loginFromSessionServer() {
-        Player player = null;
-        Object userObj = getSession().getAttribute("player");
-        if (userObj != null && userObj instanceof Player) {
-            player = (Player) userObj;
-        }
+        validatePlayerInSession();
+        Player player = playerStore.getBySessionId(getSession().getId());
+        if (player == null) { return null; }
+        player.setLoggedIn(true);
+        playerStore.updatePlayer(player);
         return player;
     }
 
     public void logout() {
-        this.getThreadLocalRequest().getSession().removeAttribute("user");
+        validatePlayerInSession();
+        Player datastorePlayer = playerStore.getBySessionId(getSession().getId());
+        datastorePlayer.setLoggedIn(false);
+        playerStore.updatePlayer(datastorePlayer);
+        getSession().removeAttribute("player");
+    }
+
+    private void validatePlayerInSession() {
+        Player datastorePlayer = playerStore.getBySessionId(getSession().getId());
+        Player sessionPlayer = (Player) getSession().getAttribute("player");
+        if (datastorePlayer == null || sessionPlayer == null) { return; }
+        if (!sessionPlayer.getName().equals(datastorePlayer.getName())) {
+            throw new IllegalArgumentException("Player saved under this session does not match player in session");
+        }
     }
 
     public void setPlayerStore(PlayerStore playerStore) {
