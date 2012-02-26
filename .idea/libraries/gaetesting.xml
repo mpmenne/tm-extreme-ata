@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="gaetesting">
+    <CLASSES>
+      <root url="jar://C:/appengine-java-sdk-1.6.1.1/appengine-java-sdk-1.6.1.1/lib/testing/appengine-testing.jar!/" />
+      <root url="jar://C:/appengine-java-sdk-1.6.1.1/appengine-java-sdk-1.6.1.1/lib/impl/appengine-api-labs.jar!/" />
+      <root url="jar://C:/appengine-java-sdk-1.6.1.1/appengine-java-sdk-1.6.1.1/lib/impl/appengine-api-stubs.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://C:/appengine-java-sdk-1.6.1.1/appengine-java-sdk-1.6.1.1/lib/testing/appengine-testing.jar!/" />
+    </SOURCES>
+  </library>
+</component>

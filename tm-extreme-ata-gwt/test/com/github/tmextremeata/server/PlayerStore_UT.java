@@ -1,7 +1,7 @@
 package com.github.tmextremeata.server;
 
 import com.github.tmextremeata.server.dao.PlayerStore;
-import com.github.tmextremeata.server.domain.Player;
+import com.github.tmextremeata.shared.Player;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -9,12 +9,15 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class PlayerStore_UT {
 
@@ -50,46 +53,99 @@ public class PlayerStore_UT {
         doTest();
     }
 
-    @Test
-    public void playerExistsAlreadyReturnThatPlayer() {
+    @Test (expected = IllegalArgumentException.class)
+    public void exceptionShouldBeThrownIfPlayerDoesNotExist() {
+        PlayerStore playerStore = new PlayerStore();
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         Entity entity = new Entity(PlayerStore.PLAYER);
-        entity.setProperty("sessionId", "sesssionId12312423423");
-        entity.setProperty("name", "joe");
+        entity.setProperty("name", "mike");
         ds.put(entity);
-        PlayerStore playerStore = new PlayerStore();
 
-        Player player = playerStore.getPlayer("sesssionId12312423423");
+        playerStore.getPlayer("not going to find this one");
 
-        assertEquals("joe", player.getName());
+        //exception expected
     }
 
     @Test
-    public void returnNullIfPlayerDoesntExist() {
+    public void weShouldGetAPlayerBackWithLoggedInNamePassword() {
+        PlayerStore playerStore = new PlayerStore();
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-        PlayerStore playerStore = new PlayerStore();
+        Entity entity = new Entity(PlayerStore.PLAYER);
+        entity.setProperty("name", "mike");
+        entity.setProperty("loggedIn", true);
+        entity.setProperty("hashPassword", "hashedPassword");
+        ds.put(entity);
 
-        Player player = playerStore.getPlayer("sesssionId12312423423");
+        Player player = playerStore.getPlayer("mike");
 
-        assertNull(player);
+        assertEquals("mike", player.getName());
+        assertThat(player.isLoggedIn(), is(true));
     }
 
     @Test
-    public void playerDoesNotExistAlreadyCreateNewPlayer() {
+    public void replacePlayerShouldGetRidOfOldAndBringInNew() {
         PlayerStore playerStore = new PlayerStore();
-
-        Player player = playerStore.makeNewPlayer("sessionID1234", "bob");
-
-        assertEquals("bob", player.getName());
-    }
-
-    @Test
-    public void dataStoreShouldHaveOneMoreItemAfterAdd() {
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity(PlayerStore.PLAYER);
+        entity.setProperty("name", "mike");
+        entity.setProperty("loggedIn", false);
+        entity.setProperty("hashPassword", "hashedPassword");
+        ds.put(entity);
+        Player player = new Player();
+        player.setName("mike");
+        player.setLoggedIn(true);
+
+        playerStore.updatePlayer(player);
+
+        Query query = new Query(PlayerStore.PLAYER);
+        query.addFilter("name", Query.FilterOperator.EQUAL, "mike");
+        assertThat((Boolean) ds.prepare(query).asSingleEntity().getProperty("loggedIn"), is(true));
+    }
+
+    @Test
+    public void getBySessionIdShouldReturnPlayerUnderThatSession() {
+        PlayerStore playerStore = new PlayerStore();
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity(PlayerStore.PLAYER);
+        entity.setProperty("name", "mike");
+        entity.setProperty("loggedIn", true);
+        entity.setProperty("hashPassword", "hashedPassword");
+        entity.setProperty("sessionId", "abcsession");
+        ds.put(entity);
+        Entity differentEntity = new Entity(PlayerStore.PLAYER);
+        differentEntity.setProperty("name", "different person");
+        differentEntity.setProperty("sessionId", "different session");
+        ds.put(differentEntity);
+
+        Player player = playerStore.getBySessionId("abcsession");
+
+        assertEquals("mike", player.getName());
+        assertThat(player.isLoggedIn(), is(true));
+    }
+
+    @Test
+    public void registerSessionShouldAssociateSessionWithAPlayer() {
+        PlayerStore playerStore = new PlayerStore();
+        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity(PlayerStore.PLAYER);
+        entity.setProperty("name", "mike");
+        entity.setProperty("loggedIn", false);
+        entity.setProperty("hashPassword", "hashedPassword");
+        ds.put(entity);
+
+        playerStore.registerSession("mike", "abcsession");
+
+        Query query = new Query(PlayerStore.PLAYER);
+        query.addFilter("name", Query.FilterOperator.EQUAL, "mike");
+        assertThat((String) ds.prepare(query).asSingleEntity().getProperty("sessionId"), is("abcsession"));
+    }
+
+    @Test
+    public void getBySessionIdShouldJustReturnNullIfNoSessionExistsForPlayer() {
         PlayerStore playerStore = new PlayerStore();
 
-        Player player = playerStore.makeNewPlayer("sessionID1234", "bob");
+        Player player = playerStore.getBySessionId("abcsession");
 
-        assertEquals(1, ds.prepare(new Query(PlayerStore.PLAYER)).countEntities(withLimit(10)));
+        Assert.assertNull(player);
     }
 }
