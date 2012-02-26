@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="Tm-extreme-ata-gwt:GWT">
+    <output-path>$PROJECT_DIR$/out/artifacts/Tm_extreme_ata_gwt_GWT</output-path>
+    <root id="root">
+      <element id="gwt-compiler-output" facet="Tm-extreme-ata-gwt/gwt/GWT" />
+    </root>
+  </artifact>
+</component>

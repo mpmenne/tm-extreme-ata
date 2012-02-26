@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Tm-extreme-ata-gwt:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Tm_extreme_ata_gwt_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="Tm-extreme-ata-gwt/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Tm-extreme-ata-gwt" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+          <element id="file-copy" path="$PROJECT_DIR$/tm-extreme-ata-gwt/test_lib/mockito-all-1.8.5.jar" />
+          <element id="library" level="project" name="gaetesting" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

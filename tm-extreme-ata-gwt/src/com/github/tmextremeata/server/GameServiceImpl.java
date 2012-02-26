@@ -2,7 +2,7 @@ package com.github.tmextremeata.server;
 
 import com.github.tmextremeata.client.GameService;
 import com.github.tmextremeata.server.dao.PlayerStore;
-import com.github.tmextremeata.server.domain.Player;
+import com.github.tmextremeata.shared.Player;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import javax.servlet.http.HttpServletRequest;

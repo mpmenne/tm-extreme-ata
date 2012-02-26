@@ -1,5 +1,5 @@
 <project>
-  <property name="sdk.dir" location="C:/google/appengine-java-sdk-1.6.1.1" />
+  <property name="sdk.dir" location="C:\appengine-java-sdk-1.6.1.1\appengine-java-sdk-1.6.1.1" />
 
   <import file="${sdk.dir}/config/user/ant-macros.xml" />
 

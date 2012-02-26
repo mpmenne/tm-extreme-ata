@@ -8,9 +8,9 @@ import com.google.gwt.user.client.ui.*;
 
 public class LoginUI extends Composite {
 //TODO Internationalisation
-private final Label txtUser = new Label("Benutzer:");
+private final Label txtUser = new Label("Username:");
     //TODO Internationalisation
-    private final Label txtPw = new Label("Passwort:");
+    private final Label txtPw = new Label("Password:");
     private final TextBoxBase inpUser = new TextBox();
     private final TextBoxBase inpPw = new PasswordTextBox();
     //TODO Internationalisation
@@ -39,12 +39,12 @@ private final Label txtUser = new Label("Benutzer:");
                         if (result.isLoggedIn()) {
 
                             //Zeige Hauptanwendung
-                            Window.alert("Zeige Hauptanwendung");
+                            Window.alert("Welcome");
                             RootPanel.get().clear();
                             RootPanel.get().add(new MainUI());
 //
                         } else {
-                            Window.alert("nicht eingeloggt");
+                            Window.alert("Error");
                         }
 
 

@@ -59,7 +59,7 @@ public class Tm_extreme_ata_gwt implements EntryPoint {
 
             public void onSuccess(Player user) {
                 if (user == null) {
-                    Window.alert("User not in session.  Redirecting to login");
+                    Window.alert("Game (in beta) require Login. Redirecting");
                     RootPanel.get().add(new LoginUI());
 
                 } else if (user.isLoggedIn()) {
