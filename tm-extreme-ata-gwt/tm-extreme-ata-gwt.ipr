@@ -68,6 +68,19 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+  <component name="FacetAutodetectingManager">
+    <autodetection-disabled>
+      <facet-type id="gwt">
+        <modules>
+          <module name="tm-extreme-ata-gwt">
+            <files>
+              <file url="file://$PROJECT_DIR$/src/com/github/tmextremeata/Tm_extreme_ata_gwt.gwt.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
+    </autodetection-disabled>
+  </component>
   <component name="IdProvider" IDEtalkID="9C296C1E2F174895DFED7040DF71E38C" />
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />

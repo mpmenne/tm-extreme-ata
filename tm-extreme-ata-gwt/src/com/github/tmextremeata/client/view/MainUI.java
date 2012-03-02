@@ -20,6 +20,7 @@ public class MainUI extends Composite {
         final Panel panel = new VerticalPanel();
 
         panel.add(new Label("Hello, " + player.getName()));
+        panel.add(new Label("Dudidu, " + player.getName()));
 
         panel.add(btLogIn);
 
